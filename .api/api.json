@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "apis": [
+    {
+      "identifier": "diffbot-2",
+      "source": "@diffbot-2/v1.1#4ndxo41jlsp4xb9s",
+      "integrity": "sha512-kLuNovXX0ZiGZgRWIbp8a1yOFJwqjtbXTnDehc8blfv6Fv7Umvr/6fscX1bacMKKdDt/pUA/Nft6GA8msGkBcQ==",
+      "installerVersion": "6.1.2"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+.topicTitle {
+  display: flex;
+  align-items: center;
+}
+
+.topicTitle h3 {
+  margin: 8px;
+}
+
+.li {
+  display: flex;
+  align-items: center;
+}
+
+.li h4 {
+  margin: 6px;
+}

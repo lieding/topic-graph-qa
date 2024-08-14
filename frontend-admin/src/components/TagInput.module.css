@@ -1,0 +1,14 @@
+.tagPlus {
+  border-style: dashed;
+}
+
+.tagItem {
+  display: inline-block;
+}
+
+.tagInput {
+  width: 78px;
+}
+
+.tags {
+}

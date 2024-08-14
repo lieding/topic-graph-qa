@@ -1,0 +1,25 @@
+{
+  "REAL_ESTATE": {
+    "description": "About the purchase and sale of new and second-hand houses and information consultation",
+    "subtopics": {
+      "NEW": {
+        "description": "information, sale and purchase of new house",
+        "tag_db_name": "realestate_new_tag",
+        "relation_db_name": "realestate_new_relation"
+      },
+      "SECOND_HAND": {
+        "description": "information, sale and purchase of second-hand house",
+        "tag_db_name": "realestate_second_hand_tag",
+        "relation_db_name": "realestate_second_hand_relation"
+      }
+    }
+  },
+  "RENTING": {
+    "description": "Rental information, including private houses, colocation and student apartments",
+    "subtopics": {
+      "PRIVATE": {
+        "description": "Rental information about private houses"
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "topic-graph-qa",
+  "version": "1.0.0",
+  "description": "LLM empowered question answering bot, categorized by topic and subtopics",
+  "main": "index.js",
+  "scripts": {
+    "dev:server": "tsx -r dotenv/config src/app.ts",
+    "dev:admin": "cd ./frontend-admin && yarn serve",
+    "test:api": "tsx -r dotenv/config tests/api.test.ts",
+    "test:db": "tsx -r dotenv/config tests/db.test.ts",
+    "test:temp": "tsx -r dotenv/config tests/temp.test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@api/diffbot-2": "file:.api/apis/diffbot-2",
+    "@koa/bodyparser": "5.1.1",
+    "@koa/router": "12.0.0",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.32.2",
+    "groq-sdk": "0.4.0",
+    "koa": "^2.15.3",
+    "openai": "^4.8.0",
+    "postgres": "3.4.4"
+  },
+  "devDependencies": {
+    "@types/koa": "2.15.0",
+    "@types/koa__router": "12.0.0",
+    "@types/pg": "^8.11.6",
+    "tsx": "^4.8.2",
+    "picocolors": "^1.0.0"
+  }
+}

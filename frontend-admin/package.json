@@ -1,0 +1,38 @@
+{
+  "name": "topic-graph-qa-frontend-admin",
+  "description": "admin for topic-graph-qa",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "classnames": "^2.3.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.14.1",
+    "antd": "5.20.0",
+    "@ant-design/icons": "5.4.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.0.0",
+    "sass": "^1.63.6",
+    "typescript": "^4.6.4",
+    "vite": "^4.3.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {},
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  }
+}
