@@ -49,6 +49,7 @@ export type RelationRetrieveByTagIdType = Awaited<ReturnType<typeof retrieveByTa
 export function retrieveByTagId (tableName: string, tagId: string) {
   const schema = getRelationSchemaByTableName(tableName);
   return DB.selectDistinct({
+    id: schema.id,
     relation: schema.relation,
     description: schema.description,
     target: schema.target_name,

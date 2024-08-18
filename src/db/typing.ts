@@ -18,6 +18,7 @@ export namespace Database {
       summary: string
       tags: IExternalTag[]
       language: string
+      _path_id_list: string[]
     }
 
     export type KnowledgeType = IBaseKnowledge & {
@@ -42,6 +43,7 @@ export namespace Database {
     thought_text: string
     language: string
     tags: Omit<IExternalTag, 'relationId'>[]
+    _topic_path_list: string[]
   }
 
   export namespace Tag {
@@ -83,7 +85,8 @@ export namespace Database {
       QUESTION_TAG_DETECTION = 'QUESTION_TAG_DETECTION',
       QUESTION_REWRITE = 'QUESTION_REWRITE',
       QUESTION_TAG_SELECTION = 'QUESTION_TAG_SELECTION',
-      ANSWER_GENERATION = 'ANSWER_GENERATION'
+      ANSWER_GENERATION = 'ANSWER_GENERATION',
+      INTENT_PHRASE_RETRIEVAL = 'INTENT_PHRASE_RETRIEVAL'
     }
 
     export interface IPrompt {

@@ -14,6 +14,7 @@ const schema = {
   language: text("language"),
   type: text("type", { enum: TypeEnum }).notNull(),
   tags: jsonb("tags").array().$type<Database.IExternalTag[]>().notNull(),
+  _path_id_list: text("_path_id_list").array().notNull(),
   text: text("text"),
   content: text("content"),
   url: text("url"),

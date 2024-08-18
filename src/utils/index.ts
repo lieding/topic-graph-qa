@@ -25,7 +25,7 @@ export function getTopicDBConfig (topic: string, subtopic: string) {
   return config;
 }
 
-export function checkValidTopicPath (path: string) {
+export function checkValidTopicPath (path: `${string},${string}` | `${string}/${string}`) {
   let topic, subTopic;
   if (path.includes('/')) {
     [topic, subTopic] = path.split('/');

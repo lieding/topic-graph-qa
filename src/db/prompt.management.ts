@@ -17,6 +17,9 @@ export type PromptTrtrieveConfig = {
   usage: Database.Prompt.Usage.ANSWER_GENERATION
   topicPath: string
   role: Database.Prompt.ROLE
+} | {
+  usage: Database.Prompt.Usage.INTENT_PHRASE_RETRIEVAL
+  topicPath: string
 }
 
 export function getPrompt (config: PromptTrtrieveConfig) {
@@ -25,6 +28,7 @@ export function getPrompt (config: PromptTrtrieveConfig) {
     Database.Prompt.Usage.QUESTION_TAG_DETECTION,
     Database.Prompt.Usage.QUESTION_REWRITE,
     Database.Prompt.Usage.QUESTION_TAG_SELECTION,
+    Database.Prompt.Usage.INTENT_PHRASE_RETRIEVAL,
   ].includes(usage)) {
     const topicConfig = config.topicPath;
     if (!topicConfig) throw new Error('invalid topicPath');

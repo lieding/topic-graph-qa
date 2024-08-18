@@ -4,6 +4,7 @@ import { retrieveByTagId } from '../src/db/knowledge.management'
 import { getTagTypeConfig } from '../src/utils';
 import { getTextRawEmbedding } from '../src/embedding/openai';
 import { getCloseQuestionsByEmbedding } from '../src/db/question.management';
+import { getRawEmbedding as getRawEmbeddingByVoyageAI } from '../src/embedding/voyageai'
 
 async function searchCloseTags (name: string, types: string[]) {
   const tableName = 'realestate_new_tag';
@@ -31,9 +32,11 @@ function retrieveRelation (tableName: string, tagId: string) {
 // retrieveRelation('realestate_new_relation', '2bcccc6c-10e3-412f-9d96-d45eded109c1')
 
 async function searchCloseQuestions (question: string, topic: string, subTopic: string) {
-  const [embedding] = await getTextRawEmbedding([question])
-  getCloseQuestionsByEmbedding(embedding, topic, subTopic)
+  const embedding = await getRawEmbeddingByVoyageAI(question);
+  if (!embedding) throw new Error('embedding fails');
+  console.log("input question: ", question);
+  getCloseQuestionsByEmbedding(embedding, [{ topic, subTopic }])
     .then(res => console.dir(res, { depth: 10 }));
 }
 
-// searchCloseQuestions('In paris, where can I live?', 'REAL_ESTATE', 'NEW')
+searchCloseQuestions('How can I find new houses?', 'REAL_ESTATE', 'NEW')

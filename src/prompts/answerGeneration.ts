@@ -1,3 +1,4 @@
+import { RetrievedAnswer } from '../db/answer.management';
 import { KnowledgeRetrieveByTagIdType } from '../db/knowledge.management';
 import { getPrompt } from '../db/prompt.management';
 import { RelationRetrieveByTagIdType } from '../db/relation.management';
@@ -8,7 +9,8 @@ export async function getAnswerGenerationPrompt (
   topic: string,
   subTopic: string,
   knowledges: KnowledgeRetrieveByTagIdType,
-  relations: RelationRetrieveByTagIdType
+  relations: RelationRetrieveByTagIdType,
+  answers: RetrievedAnswer,
 ) {
   const systemPrompt = await getPrompt({
     usage: Database.Prompt.Usage.ANSWER_GENERATION,
@@ -36,11 +38,17 @@ export async function getAnswerGenerationPrompt (
     .map((knowledge) => knowledge.text ?? '')
     .filter(Boolean)
     .map((text, index) => `Concerning Knowledge ${index + 1}:\n${text}`);
+  const answerInfo = answers
+    .map((answer) => answer.text ?? '')
+    .filter(Boolean)
+    .map((text, index) => `Answer ${index + 1}:\n${text}`);
   const user = `
 Concerning Relations:
 ${relationInfo.join('\n')}
 
 ${knowledgeInfo.join('\n')}
+
+${answerInfo.join('\n')}
 
 Here is the user question: ${question}
   `

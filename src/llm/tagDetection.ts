@@ -2,11 +2,11 @@ import { getTagDetectionPrompt } from "../prompts/tagDetection";
 import { chatCompletion, GroqModel } from "./_groq";
 
 
-export async function getTagDetection (topic: string, subTopic: string, question: string) {
+export async function getTagDetection (topic: string, subTopic: string, questions: string[]) {
   const {
     system,
     user
-  } = await getTagDetectionPrompt(question, topic, subTopic);
+  } = await getTagDetectionPrompt(questions, topic, subTopic);
   const { content } = await chatCompletion(system, user, GroqModel.LLAMA_31_70B);
   if (!content) return null;
   let lines = content.split('\n')
@@ -20,12 +20,19 @@ export async function getTagDetection (topic: string, subTopic: string, question
       return { text, types };
     });
   if (!lines || lines.length === 0) return null;
-  const parsedLines = [];
+  const map: Record<string, { text: string, types: string[] }> = {};
   for (const line of lines) {
     if (!line) continue;
-    const { text, types } = line;
+    let { text, types } = line;
     if (!text) continue;
-    parsedLines.push({ text, types });
+    types = types.map(it => it.trim().toUpperCase()).filter(it => it);
+    const loweredText = text.trim().toLowerCase();
+    const obj = map[loweredText];
+    if (obj) {
+      obj.types = [...new Set([...obj.types, ...types])];
+    } else {
+      map[loweredText] = { text, types };
+    }
   }
-  return parsedLines;
+  return Object.values(map);
 }

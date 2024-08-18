@@ -1,4 +1,4 @@
-import { and, eq, sql } from 'drizzle-orm'
+import { and, eq, arrayOverlaps, arrayContains } from 'drizzle-orm'
 import { DB } from "./_db";
 import { KnowledgeSchema } from "./knowledge.schema";
 import { Database } from "./typing";
@@ -16,6 +16,7 @@ export async function insert (data: API.IKnowledgeCreation) {
       relationId
     };
   });
+  const _path_id_list = tags.map(({ topicPath, tagId }) => `${topicPath}$${tagId}`);
   if (type === Database.Knowledge.Type.TEXT && text) {
     knowledgeData = {
       id: randomUUID(),
@@ -23,7 +24,8 @@ export async function insert (data: API.IKnowledgeCreation) {
       summary,
       language,
       tags,
-      text
+      text,
+      _path_id_list,
     };
   }
   if (!knowledgeData) {
@@ -39,8 +41,9 @@ export function retrieveAll () {
 export type KnowledgeRetrieveByTagIdType = Awaited<ReturnType<typeof retrieveByTagId>>;
 
 export function retrieveByTagId (topic: string, subTopic: string, tagId: string) {
-  const topicPath = [topic, subTopic].join(',');
+  const pathIdList = [`${topic},${subTopic}$${tagId}`];
   return DB.select({
+    id: KnowledgeSchema.id,
     summary: KnowledgeSchema.summary,
     language: KnowledgeSchema.language,
     text: KnowledgeSchema.text
@@ -48,6 +51,6 @@ export function retrieveByTagId (topic: string, subTopic: string, tagId: string)
     .from(KnowledgeSchema)
     .where(and(
       eq(KnowledgeSchema.type, Database.Knowledge.Type.TEXT),
-      sql`exists (SELECT 1 FROM unnest(tags) AS ele WHERE ele ->> 'topicPath' = '${sql.raw(topicPath)}')`
+      arrayContains(KnowledgeSchema._path_id_list, pathIdList)
     ));
 }
