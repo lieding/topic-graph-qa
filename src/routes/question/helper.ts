@@ -171,15 +171,15 @@ async function searchRerankCloseQuestions (
     topic: string,
   subTopic: string
   }[],
-  config?: { minCosineSim?: number, rerankTopk?: number }
+  config?: { maxCosineDis?: number, rerankTopk?: number }
 ) {
-  const { minCosineSim = 0.6, rerankTopk = 8 } = config ?? {};
+  const { maxCosineDis = 0.6, rerankTopk = 8 } = config ?? {};
   const questions = await getCloseQuestionsByEmbedding(embedding, topicConfig);
-  const filteredQuestions = questions?.filter(it => Number(it.similarity) > minCosineSim);
+  const filteredQuestions = questions?.filter(it => Number(it.distance) < maxCosineDis);
   if (!filteredQuestions?.length || filteredQuestions.length === 1) {
     const firstEle = filteredQuestions[0];
     if (!firstEle) return [];
-    return [{ ...firstEle, jinaRelvence: Number(firstEle.similarity) }];
+    return [{ ...firstEle, jinaRelvence: 1 - Number(firstEle.distance) }];
   }
   const questionTexts = filteredQuestions.map(it => it.question);
   const rerankRes = await rerankByJina(question, questionTexts, rerankTopk);

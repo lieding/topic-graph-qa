@@ -35,7 +35,7 @@ export function getCloseQuestionsByEmbedding (embedding: number[], topicConfig: 
     thought: QuestionSchema.thought_text,
     language: QuestionSchema.language,
     tags: QuestionSchema.tags,
-    similarity: cosineDistance(QuestionSchema.question_embedding, embedding),
+    distance: cosineDistance(QuestionSchema.question_embedding, embedding),
   })
   .from(QuestionSchema)
   .where(arrayOverlaps(QuestionSchema._topic_path_list, topicPathList))
